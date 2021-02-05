@@ -32,32 +32,48 @@
  * @return {string}
  */
 var simplifyPath = function(path) {
-  path += '/';
-  let j;
+  
+  // Condition based solution
+  
+  // path += '/';
+  // let j;
+  // for(let i=0; i<path.length; i++){
+  //   if(path[i] === '/' && path[i+1] === '.' && path[i+2] === '.' && path[i+3] === '/'){
+  //     j = i-1;
+  //     while(path[j] != '/' && j >= 0){
+  //       j--;
+  //     }
+  //     if(j < 0) j=0;
+  //     path = path.substring(0,j+1) + path.substring(i+4);
+  //     i = j-1;
+  //   }
+  //    else if(path[i] === '/' && path[i+1] === '.' && path[i+2] === '/'){
+  //     path = path.substring(0,i+1) + path.substring(i+3);
+  //     i = i-1;
+  //    }
+  //    else if(path[i] === '/' && path[i+1] === '/' ){
+  //     path = path.substring(0,i+1) + path.substring(i+2);
+  //      i = i-1;
+  //   }
+  //  
+  // }
+  // if(path.length > 1 && path[path.length -1] === '/'){
+  //   path = path.slice(0,path.length-1);
+  // }
+  // return path;
+  
+  // Stack based solution
+  let stack = [];
+  path = path.split('/');
   for(let i=0; i<path.length; i++){
-    if(path[i] === '/' && path[i+1] === '.' && path[i+2] === '.' && path[i+3] === '/'){
-      j = i-1;
-      while(path[j] != '/' && j >= 0){
-        j--;
-      }
-      if(j < 0) j=0;
-      path = path.substring(0,j+1) + path.substring(i+4);
-      i = j-1;
+    if(path[i] === '..'){
+      stack.pop();
     }
-     else if(path[i] === '/' && path[i+1] === '.' && path[i+2] === '/'){
-      path = path.substring(0,i+1) + path.substring(i+3);
-      i = i-1;
-     }
-     else if(path[i] === '/' && path[i+1] === '/' ){
-      path = path.substring(0,i+1) + path.substring(i+2);
-       i = i-1;
+    else if(path[i] != '.' && path[i] != ''){
+      stack.push(path[i])
     }
-    
   }
-  if(path.length > 1 && path[path.length -1] === '/'){
-    path = path.slice(0,path.length-1);
-  }
-  return path;
+  return '/' + stack.join('/');
 };
 
-console.log(`Simplify Path is `,simplifyPath("/..."));
+console.log(`Simplify Path is `,simplifyPath("/a/./b/../../c/"));
