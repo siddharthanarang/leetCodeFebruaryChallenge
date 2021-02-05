@@ -31,4 +31,4 @@ var findLHS = function(nums) {
   return max;
 };
 
-console.log(`Longest Harmonious Subsequence `, findLHS([1,3,2,2,5,2,3,7]));
+console.log(`Longest Harmonious Subsequence `, findLHS([1,1,1,1]));
