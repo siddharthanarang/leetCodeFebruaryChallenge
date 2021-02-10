@@ -34,35 +34,66 @@
  * @param {Node} head
  * @return {Node}
  */
+// var copyRandomList = function(head) {
+//
+//   if(!head){
+//     return null;
+//   }
+//   let newHead, newNode, currentNode = head;
+//   let memory = new Map(), previousNode;
+//   while(currentNode){
+//     newNode = new Node(currentNode.val);
+//     memory.set(currentNode, newNode);
+//    
+//     if(previousNode){
+//       previousNode.next = newNode;
+//     }
+//     previousNode = newNode;
+//     currentNode = currentNode.next;
+//     if(!newHead){
+//       newHead = newNode;
+//     }
+//   }
+//
+//   currentNode = head, newNode = newHead;
+//   while(currentNode){
+//     newNode.random = memory.get(currentNode.random);
+//     currentNode = currentNode.next;
+//     newNode = newNode.next;
+//
+//   }
+//   return newHead;
+//
+// };
+
 var copyRandomList = function(head) {
 
   if(!head){
     return null;
   }
-  let newHead, newNode, currentNode = head;
-  let memory = new Map(), previousNode;
+  let currentNode = head, newNode, newRoot;
   while(currentNode){
-    newNode = new Node(currentNode.val);
-    memory.set(currentNode, newNode);
-    
-    if(previousNode){
-      previousNode.next = newNode;
+    newNode = new Node(currentNode.val, currentNode.next);
+    if(!newRoot){
+      newRoot = newNode;
     }
-    previousNode = newNode;
-    currentNode = currentNode.next;
-    if(!newHead){
-      newHead = newNode;
-    }
+    currentNode.next = newNode;
+    currentNode = newNode.next;
   }
-
-  currentNode = head, newNode = newHead;
+  currentNode = head;
   while(currentNode){
-    newNode.random = memory.get(currentNode.random);
-    currentNode = currentNode.next;
-    newNode = newNode.next;
-
+    currentNode.next.random = currentNode.random && currentNode.random.next;
+    currentNode = currentNode.next.next;
   }
-  return newHead;
+  let currentNewNode = newRoot;
+  currentNode = head;
+  while(currentNode){
+    currentNode.next = currentNode.next.next;
+    currentNewNode.next = currentNewNode.next && currentNewNode.next.next ? currentNewNode.next.next : null;
+    currentNode = currentNode.next;
+    currentNewNode = currentNewNode.next;
+  }
+  return newRoot;
 
 };
 
@@ -72,6 +103,7 @@ let second = new Node(11);
 let third = new Node(10);
 let fourth = new Node(1);
 root.next = first;
+// root.random = first;
 first.next = second;
 first.random = root;
 second.next = third;
