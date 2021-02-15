@@ -58,14 +58,9 @@ var kWeakestRows = function(mat, k) {
         output.push(memory[i][j]);
         currentK++;
       }
-
     }
-
   }
   return output;
-
- 
-
 };
 
 console.log(`K Weakest Rows are `,kWeakestRows([[1,0,0,0],
